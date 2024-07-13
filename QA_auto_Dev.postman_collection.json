@@ -1,0 +1,2534 @@
+{
+	"info": {
+		"_postman_id": "b0920595-b45c-4ad3-a4d3-de2fdb0912d5",
+		"name": "QA_auto_Dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23786577"
+	},
+	"item": [
+		{
+			"name": "T13.1_Smoke",
+			"item": [
+				{
+					"name": "SignUp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generatePassword() {\r",
+									"    const length = Math.floor(Math.random() * 8) + 8;\r",
+									"    const charset = {\r",
+									"        numbers: '0123456789',\r",
+									"        uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',\r",
+									"        lowercase: 'abcdefghijklmnopqrstuvwxyz'\r",
+									"    };\r",
+									"\r",
+									"    // console.log(generatePassword());\r",
+									"\r",
+									"    \r",
+									"    let password = '';\r",
+									"    password += getRandomChar(charset.numbers);\r",
+									"    password += getRandomChar(charset.uppercase);\r",
+									"    password += getRandomChar(charset.lowercase);\r",
+									"\r",
+									"    const allChars = charset.numbers + charset.uppercase + charset.lowercase;\r",
+									"    \r",
+									"    for (let i = password.length; i < length; i++) {\r",
+									"        password += getRandomChar(allChars);\r",
+									"    }\r",
+									"    \r",
+									"    password = shuffleString(password);\r",
+									"\r",
+									"    return password;\r",
+									"}\r",
+									"\r",
+									"function getRandomChar(chars) {\r",
+									"    const randomIndex = Math.floor(Math.random() * chars.length);\r",
+									"    return chars[randomIndex];\r",
+									"}\r",
+									"\r",
+									"function shuffleString(str) {\r",
+									"    const arr = str.split('');\r",
+									"    for (let i = arr.length - 1; i > 0; i--) {\r",
+									"        const j = Math.floor(Math.random() * (i + 1));\r",
+									"        [arr[i], arr[j]] = [arr[j], arr[i]];\r",
+									"    }\r",
+									"    return arr.join('');\r",
+									"}\r",
+									"\r",
+									"const password = generatePassword();\r",
+									"\r",
+									"pm.environment.set('password', password);\r",
+									"// console.log(pm.environment.get('password'));\r",
+									"\r",
+									"const name = pm.environment.replaceIn('{{$randomFirstName}}')\r",
+									"pm.environment.set('name', name);\r",
+									"\r",
+									"const lastName = pm.environment.replaceIn('{{$randomLastName}}')\r",
+									"pm.environment.set('lastName', lastName);\r",
+									"\r",
+									"const email = pm.environment.replaceIn('{{$randomEmail}}')\r",
+									"pm.environment.set('email', email);\r",
+									"// console.log(pm.environment.get('email'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_SignUp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"repeatPassword\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/auth/signup",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 11:12:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"70-O93Cgmz6JUrxYqy0TiMh1Iu/MZI\""
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "sid=s%3AKOI1qYtjEp2dX0E2fb1UE2a_E-8iw1U-.%2FIVV1Le8uK11Ywd%2F0ccLN90Z2kPdzUrgIB3akxHDfxQ; Domain=.forstudy.space; Path=/; Expires=Sun, 14 Jul 2024 11:12:16 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\",\n    \"data\": {\n        \"userId\": 56377,\n        \"photoFilename\": \"default-user.png\",\n        \"distanceUnits\": \"km\",\n        \"currency\": \"usd\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "SignIn",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_SignIn",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"remember\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/auth/signin",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 11:13:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "29"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1720869212"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"70-O93Cgmz6JUrxYqy0TiMh1Iu/MZI\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\",\n    \"data\": {\n        \"userId\": 56377,\n        \"photoFilename\": \"default-user.png\",\n        \"distanceUnits\": \"km\",\n        \"currency\": \"usd\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "LogOut",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/logout",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_LogOut",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{URL_dev}}/api/auth/logout",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 11:13:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "remember_me=; Domain=.forstudy.space; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "sid=; Domain=.forstudy.space; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f-VaSQ4oDUiZblZNAEkkN+sX+q3Sg\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\"\n}"
+						}
+					]
+				},
+				{
+					"name": "SignIn_after_log_out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_SignIn_after_log_out",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"remember\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/auth/signin",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 11:14:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "112"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "30"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "29"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1720869272"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"70-O93Cgmz6JUrxYqy0TiMh1Iu/MZI\""
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "sid=s%3AslL9flpR85mYe3SiwF4CBgf8FFyQb0lN.tpbJF7yTqPEwrqRe6wf4w1GCoZxPZGREs2jI8KeqH7k; Domain=.forstudy.space; Path=/; Expires=Sun, 14 Jul 2024 11:14:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\",\n    \"data\": {\n        \"userId\": 56377,\n        \"photoFilename\": \"default-user.png\",\n        \"distanceUnits\": \"km\",\n        \"currency\": \"usd\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "EditUsersProfile",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var photo = pm.environment.replaceIn('{{$randomFileName}}')\r",
+									"pm.environment.set('photo', photo);\r",
+									"\r",
+									"var newName = pm.environment.replaceIn('{{$randomFirstName}}')\r",
+									"pm.environment.set('newName', newName);\r",
+									"\r",
+									"var newLastName = pm.environment.replaceIn('{{$randomLastName}}')\r",
+									"pm.environment.set('newLastName', newLastName);\r",
+									"\r",
+									"var country = pm.environment.replaceIn('{{$randomCountry}}')\r",
+									"pm.environment.set('country', country);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"photo\": \"{{photo}}\",\r\n  \"name\": \"{{newName}}\",\r\n  \"lastName\": \"{{newLastName}}\",\r\n  \"dateBirth\": \"{{dateBirth}}\",\r\n  \"country\": \"{{country}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/users/profile",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_EditUsersProfile",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"photo\": \"{{photo}}\",\r\n  \"name\": \"{{newName}}\",\r\n  \"lastName\": \"{{newLastName}}\",\r\n  \"dateBirth\": \"{{dateBirth}}\",\r\n  \"country\": \"{{country}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/users/profile",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 11:14:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b3-LnYN5e2IssJos4uWqTIjkPGe7Eg\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\",\n    \"data\": {\n        \"userId\": 56377,\n        \"photoFilename\": \"default-user.png\",\n        \"name\": \"Xzavier\",\n        \"lastName\": \"Kozey\",\n        \"dateBirth\": \"2003-08-31T06:33:09.000Z\",\n        \"country\": \"Equatorial Guinea\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "ChangeUserPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generatePassword() {\r",
+									"    const length = Math.floor(Math.random() * 8) + 8;\r",
+									"    const charset = {\r",
+									"        numbers: '0123456789',\r",
+									"        uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',\r",
+									"        lowercase: 'abcdefghijklmnopqrstuvwxyz'\r",
+									"    };\r",
+									"\r",
+									"    // console.log(generatePassword());\r",
+									"\r",
+									"    \r",
+									"    let password = '';\r",
+									"    password += getRandomChar(charset.numbers);\r",
+									"    password += getRandomChar(charset.uppercase);\r",
+									"    password += getRandomChar(charset.lowercase);\r",
+									"\r",
+									"    const allChars = charset.numbers + charset.uppercase + charset.lowercase;\r",
+									"    \r",
+									"    for (let i = password.length; i < length; i++) {\r",
+									"        password += getRandomChar(allChars);\r",
+									"    }\r",
+									"    \r",
+									"    password = shuffleString(password);\r",
+									"\r",
+									"    return password;\r",
+									"}\r",
+									"\r",
+									"function getRandomChar(chars) {\r",
+									"    const randomIndex = Math.floor(Math.random() * chars.length);\r",
+									"    return chars[randomIndex];\r",
+									"}\r",
+									"\r",
+									"function shuffleString(str) {\r",
+									"    const arr = str.split('');\r",
+									"    for (let i = arr.length - 1; i > 0; i--) {\r",
+									"        const j = Math.floor(Math.random() * (i + 1));\r",
+									"        [arr[i], arr[j]] = [arr[j], arr[i]];\r",
+									"    }\r",
+									"    return arr.join('');\r",
+									"}\r",
+									"\r",
+									"const newPassword = generatePassword();\r",
+									"\r",
+									"pm.environment.set('newPassword', newPassword);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"oldPassword\": \"{{password}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"repeatPassword\": {{newPassword}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/users/password",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_ChangeUserPassword Copy",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"oldPassword\": \"{{password}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"repeatPassword\": {{newPassword}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/users/password",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"password"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 11:23:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-VTbSlRlZau8ldU71peoNFNHDFwI\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Unexpected token w in JSON at position 86\"\n}"
+						}
+					]
+				},
+				{
+					"name": "LogOut_afterChangePassword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/logout",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn__afterChangePassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{newPassword}}\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateNewCar",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// var carModelId = Math.floor(Math.random() * 100);\r",
+									"// pm.environment.set('carModelId', carModelId);\r",
+									"// // console.log(pm.collectionVariables.get('carModelId'));\r",
+									"\r",
+									"var mileage = Math.floor(Math.random() * 1000);\r",
+									"pm.environment.set('mileage', mileage);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"const carId = jsonData.data.id;\r",
+									"pm.environment.set('carId', carId);\r",
+									"\r",
+									"const initialMileage = jsonData.data.initialMileage;\r",
+									"pm.environment.set('initialMileage', initialMileage);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carBrandId\": 5,\r\n  \"carModelId\": 21,\r\n  \"mileage\": {{mileage}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/cars",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"cars"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_CreateNewCar",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"carBrandId\": 5,\r\n  \"carModelId\": 21,\r\n  \"mileage\": {{mileage}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/cars",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"cars"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 12:09:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "239"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ef-QW9WnvsFQGlSunFHfkFHJCUrN0U\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\",\n    \"data\": {\n        \"id\": 122359,\n        \"carBrandId\": 5,\n        \"carModelId\": 21,\n        \"initialMileage\": 270,\n        \"updatedMileageAt\": \"2024-07-13T12:09:01.371Z\",\n        \"carCreatedAt\": \"2024-07-13T12:09:01.371Z\",\n        \"mileage\": 270,\n        \"brand\": \"Fiat\",\n        \"model\": \"Panda\",\n        \"logo\": \"fiat.png\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "CreateExpense",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"var totalCost = Math.floor(Math.random() * 100);\r",
+									"pm.environment.set('totalCost', totalCost);\r",
+									"\r",
+									"var liters = Math.floor(Math.random() * 100);\r",
+									"pm.environment.set('liters', liters);\r",
+									"\r",
+									"var liters = Math.floor(Math.random() * 100);\r",
+									"pm.environment.set('liters', liters);\r",
+									"\r",
+									"const date = new Date();\r",
+									"pm.environment.set('date', date);\r",
+									"\r",
+									"var newMileage = pm.environment.get('initialMileage') + Math.floor(Math.random() * 100);\r",
+									"pm.environment.set('newMileage', newMileage);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carId\": {{carId}},\r\n  \"reportedAt\": \"{{date}}\",\r\n  \"mileage\": {{newMileage}},\r\n  \"liters\": {{liters}},\r\n  \"totalCost\": {{totalCost}},\r\n  \"forceMileage\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/expenses",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_CreateExpense",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"carId\": {{carId}},\r\n  \"reportedAt\": \"{{date}}\",\r\n  \"mileage\": {{newMileage}},\r\n  \"liters\": {{liters}},\r\n  \"totalCost\": {{totalCost}},\r\n  \"forceMileage\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/expenses",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"expenses"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 12:09:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "131"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"83-lVY0yXju2Pvu4gJdyKpOfaXEd9I\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\",\n    \"data\": {\n        \"carId\": 122359,\n        \"reportedAt\": \"2024-07-13T12:09:07.573Z\",\n        \"liters\": 15,\n        \"id\": 32217,\n        \"mileage\": 333,\n        \"totalCost\": 20\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/users",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Resp_DeleteUser",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_dev}}/api/users",
+									"host": [
+										"{{URL_dev}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 13 Jul 2024 12:10:34 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "remember_me=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f-VaSQ4oDUiZblZNAEkkN+sX+q3Sg\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "SignUp_valid_data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generatePassword() {\r",
+									"    const length = Math.floor(Math.random() * 8) + 8;\r",
+									"    const charset = {\r",
+									"        numbers: '0123456789',\r",
+									"        uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',\r",
+									"        lowercase: 'abcdefghijklmnopqrstuvwxyz'\r",
+									"    };\r",
+									"\r",
+									"    // console.log(generatePassword());\r",
+									"\r",
+									"    \r",
+									"    let password = '';\r",
+									"    password += getRandomChar(charset.numbers);\r",
+									"    password += getRandomChar(charset.uppercase);\r",
+									"    password += getRandomChar(charset.lowercase);\r",
+									"\r",
+									"    const allChars = charset.numbers + charset.uppercase + charset.lowercase;\r",
+									"    \r",
+									"    for (let i = password.length; i < length; i++) {\r",
+									"        password += getRandomChar(allChars);\r",
+									"    }\r",
+									"    \r",
+									"    password = shuffleString(password);\r",
+									"\r",
+									"    return password;\r",
+									"}\r",
+									"\r",
+									"function getRandomChar(chars) {\r",
+									"    const randomIndex = Math.floor(Math.random() * chars.length);\r",
+									"    return chars[randomIndex];\r",
+									"}\r",
+									"\r",
+									"function shuffleString(str) {\r",
+									"    const arr = str.split('');\r",
+									"    for (let i = arr.length - 1; i > 0; i--) {\r",
+									"        const j = Math.floor(Math.random() * (i + 1));\r",
+									"        [arr[i], arr[j]] = [arr[j], arr[i]];\r",
+									"    }\r",
+									"    return arr.join('');\r",
+									"}\r",
+									"\r",
+									"const password = generatePassword();\r",
+									"\r",
+									"pm.environment.set('password', password);\r",
+									"console.log(pm.environment.get('password'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"repeatPassword\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn_Valid_data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogOut",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/logout",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn_after_log_out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_Invalid_email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_Invalid_password_valid_email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_lastname",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_name_lastname",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_repeat_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_empty_all_data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"\",\r\n  \"email\": \"\",\r\n  \"password\": \"\",\r\n  \"repeatPassword\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp_already_used_email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signup",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn_Invalid_email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn_Invalid_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "EditUsersProfile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"photo\": \"user-1621352948859.jpg\",\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Dou\",\r\n  \"dateBirth\": \"2021-03-17T15:21:05.000Z\",\r\n  \"country\": \"Ukraine\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/users/profile",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "???_ResetPassword_byEmail",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/resetPassword",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangeUserPassword",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"oldPassword\": \"FooBar12345\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"repeatPassword\": \"Qwerty12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/users/password",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn_new_valid_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn_new_invalid_password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"Qwerty12345\",\r\n  \"remember\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/auth/signin",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/users",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cars",
+			"item": [
+				{
+					"name": "Cars_brands",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/cars/brands",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CarsModels",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/cars/models",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"models"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateNewCar",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var carModelId = Math.floor(Math.random() * 1000);\r",
+									"pm.collectionVariables.set('carModelId', carModelId);\r",
+									"// console.log(pm.collectionVariables.get('carModelId'));\r",
+									"\r",
+									"\r",
+									"// var mileage = pm.collectionVariables.get('mileage');\r",
+									"// if(mileage==null){\r",
+									"//     mileage = 100\r",
+									"// };\r",
+									"\r",
+									"// pm.collectionVariables.set('mileage', mileage + Math.floor(Math.random() * 1000));\r",
+									"// console.log(pm.collectionVariables.get('mileage'));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carBrandId\": 1,\r\n  \"carModelId\": {{carModelId}},\r\n  \"mileage\": {{mileage}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/cars",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCarModel_byID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/cars/models/3",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"models",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expenses",
+			"item": [
+				{
+					"name": "CreateExpense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carId\": 1,\r\n  \"reportedAt\": \"2021-05-17\",\r\n  \"mileage\": 111,\r\n  \"liters\": 11,\r\n  \"totalCost\": 11,\r\n  \"forceMileage\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_dev}}/api/expenses",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"expenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetExpense_byID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/expenses/1",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"expenses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "1_HEAD_cars/brands",
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{URL_dev}}/api/cars/brands",
+					"host": [
+						"{{URL_dev}}"
+					],
+					"path": [
+						"api",
+						"cars",
+						"brands"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200_OK_cars/brands",
+					"originalRequest": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{URL_dev}}/api/cars/brands",
+							"host": [
+								"{{URL_dev}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"brands"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 09 Jul 2024 14:37:39 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "278"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"116-AOmmN14hMc6SHgCnlsF5kXXxxD0\""
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "carModelId",
+			"value": ""
+		},
+		{
+			"key": "mileage",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": "s97qOr4kBGs0Q"
+		}
+	]
+}
